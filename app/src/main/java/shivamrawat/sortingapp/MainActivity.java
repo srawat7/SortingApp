@@ -56,13 +56,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    /*    ArrayList<Integer> numbers = new ArrayList<Integer>();
-
-        Integer[] heroes = new Integer[]{2,5,6,7,1,3};
-        int[] heroes2 = new int[]{2,5,6,7,1,3};
-        Collections.addAll(numbers, heroes); */
-
-
     }
 
     public ArrayList<Integer> generateRandomArray(){
