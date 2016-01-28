@@ -14,14 +14,13 @@ import shivamrawat.sortingapp.R;
 import shivamrawat.sortingapp.Sorts.BucketSort;
 
 /**
- * Created by Shivam on 1/24/2016.
+ * Created by Shivam on 1/28/2016.
  */
-public class SortAdapter extends BaseAdapter {
-
+public class BucketSortAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<Integer> mList;
 
-    public SortAdapter(Activity activity, ArrayList<Integer> numberList) {
+    public BucketSortAdapter(Activity activity, ArrayList<Integer> numberList) {
         this.activity = activity;
         this.mList = numberList;
     }
@@ -49,7 +48,7 @@ public class SortAdapter extends BaseAdapter {
         }
         TextView title = (TextView) convertView.findViewById(R.id.number);
         title.setText(String.valueOf(mList.get(position)));
-        if(position == BucketSort.setJ)
+        if(position == BucketSort.setI)
             title.setBackgroundResource(R.drawable.redbox);
         else
             title.setBackgroundResource(R.drawable.box);

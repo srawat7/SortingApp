@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import shivamrawat.sortingapp.Sorts.BucketSort;
 import shivamrawat.sortingapp.Sorts.HeapSort;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ArrayList<Integer> numbers = generateRandomArray();
                 if(numbers != null) {
+
                     Intent intent = new Intent(MainActivity.this, BucketSort.class);
                     intent.putIntegerArrayListExtra("numbersArray", numbers);
                     startActivity(intent);
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<Integer> generateRandomArray(){
         ArrayList<Integer> list = new ArrayList<Integer>();
-
         int arrayLength;
 
         if(numberTV.getText() != null && numberTV.length() != 0){
@@ -70,14 +71,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(arrayLength != -1){
-            for(int i = 0; i < arrayLength;)
+            Random r = new Random();
+            for(int i = 0; i < arrayLength; i++)
             {
-                int rand = ((int)(Math.random() * 40)) + 1;
-                if(!list.contains(rand))
-                {
-                    list.add(rand);
-                    i++;
-                }
+                int i1 = r.nextInt(100 - 1);
+                list.add(i1);
+
             }
 
             return list;

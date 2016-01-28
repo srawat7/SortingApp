@@ -19,6 +19,9 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
     private static ArrayList<Integer> sorted_sequence;
     private int maxValue;
 
+    private static int changeI;
+    private static int changeJ;
+
     @Override
     public void sort(ArrayList<Integer> sequence) {
 
@@ -31,10 +34,23 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
         for (int i = 0; i < Bucket.length; i++) {
 
             for (int j = 0; j < Bucket[i]; j++) {
-                sorted_sequence.set(outPos++, i);
                 int index = numbersToSort.indexOf(i);
+                changeI = index;
+                changeJ = outPos;
+
+                publishProgress();
+
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                sorted_sequence.set(outPos++, i);
+           //     int index = numbersToSort.indexOf(i);
                 numbersToSort.set(index, 0);
-                mCallback.onChange();
+             //   mCallback.onChange();
+                publishProgress();
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
@@ -46,7 +62,7 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
     }
 
     public interface SortObserver {
-        public void onChange();
+        public void onChange(int i, int j);
     }
 
     public static SortObserver mCallback;
@@ -60,8 +76,6 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
 
     @Override
     protected Object doInBackground(Object... params) {
-     /*   int max = maxValue(numbersToSort);
-        sort(numbersToSort, max); */
         sort(numbersToSort);
         return null;
     }
@@ -71,37 +85,10 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
         //  delegate.processFinish(i, j);
     }
 
-    static ArrayList<Integer> sort(ArrayList<Integer> sequence, int maxValue)
-    {
-
-        int[] Bucket = new int[maxValue + 1];
-     //   ArrayList<Integer> sorted_sequence = new ArrayList<Integer>();
-/*
-        for(Integer number: numbersToSort){
-            sorted_sequence.add(0);
-        } */
-
-
-        for (int i = 0; i < sequence.size(); i++)
-            Bucket[sequence.get(i)]++;
-
-        int outPos = 0;
-        for (int i = 0; i < Bucket.length; i++) {
-
-            for (int j = 0; j < Bucket[i]; j++) {
-                sorted_sequence.set(outPos++, i);
-                numbersToSort.set(i, 0);
-                mCallback.onChange();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-
-        return sorted_sequence;
+    @Override
+    public void onProgressUpdate(Object... result){
+        super.onProgressUpdate(result);
+        mCallback.onChange(changeI, changeJ);
     }
 
     static int maxValue(ArrayList<Integer> sequence)

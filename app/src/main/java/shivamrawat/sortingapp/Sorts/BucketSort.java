@@ -7,7 +7,8 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
-import shivamrawat.sortingapp.Adapter.HeapSortAdapter;
+import shivamrawat.sortingapp.Adapter.BucketSortAdapter;
+import shivamrawat.sortingapp.Adapter.SortAdapter;
 import shivamrawat.sortingapp.R;
 
 /**
@@ -19,10 +20,15 @@ public class BucketSort extends AppCompatActivity implements BucketAsyncTask.Sor
     private static ArrayList<Integer> sorted_sequence;
     private GridView gridView;
     private GridView gridView2;
-    private HeapSortAdapter adapter;
-    private HeapSortAdapter adapter2;
+    private BucketSortAdapter adapter;
+    private SortAdapter adapter2;
+
+    public static int setI = -1;
+    public static int setJ = -1;
 
     private final String BUCKET_TAG = "display_list_fragment_tag";
+
+    BucketAsyncTask task;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,19 +44,21 @@ public class BucketSort extends AppCompatActivity implements BucketAsyncTask.Sor
         }
 
         gridView = (GridView) findViewById((R.id.gridView));
-        adapter = new HeapSortAdapter(BucketSort.this, numbersToSort);
+        adapter = new BucketSortAdapter(BucketSort.this, numbersToSort);
         gridView.setAdapter(adapter);
 
         gridView2 = (GridView) findViewById(R.id.gridView_sorted);
-        adapter2 = new HeapSortAdapter(BucketSort.this, sorted_sequence);
+        adapter2 = new SortAdapter(BucketSort.this, sorted_sequence);
         gridView2.setAdapter(adapter2);
 
-        BucketAsyncTask task = (BucketAsyncTask) new BucketAsyncTask(numbersToSort, sorted_sequence, new BucketAsyncTask.SortObserver() {
+        task = (BucketAsyncTask) new BucketAsyncTask(numbersToSort, sorted_sequence, new BucketAsyncTask.SortObserver() {
             @Override
-            public void onChange() {
-                runOnUiThread(new Runnable() // while debugging, it comes here, on Step Over it stick for 2 times and then move at the end of method without error
+            public void onChange(final int i, final int j) {
+                runOnUiThread(new Runnable()
                 {
                     public void run() {
+                        setI = i;
+                        setJ = j;
                         adapter.notifyDataSetChanged();
                         adapter2.notifyDataSetChanged();
                     }
@@ -61,12 +69,19 @@ public class BucketSort extends AppCompatActivity implements BucketAsyncTask.Sor
     }
 
     @Override
-    public void onChange() {
+    public void onChange(int i, int j) {
 
     }
 
     @Override
     public void onBackPressed(){
+        setI = -1;
+        setJ = -1;
+        task.cancel(true);
+        numbersToSort.clear();
+        adapter.notifyDataSetChanged();
+        sorted_sequence.clear();
+        adapter2.notifyDataSetChanged();
         finish();
         super.onBackPressed();
     }

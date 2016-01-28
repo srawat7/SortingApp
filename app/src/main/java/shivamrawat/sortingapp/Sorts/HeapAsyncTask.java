@@ -12,8 +12,8 @@ import shivamrawat.sortingapp.Sorter;
  */
 public class HeapAsyncTask extends AsyncTask<Object, Object, Object> implements Sorter {
 
-    private static int i;
-    private static int j;
+    private static int changeI;
+    private static int changeJ;
 
     private static int n;
     private static int left;
@@ -31,17 +31,15 @@ public class HeapAsyncTask extends AsyncTask<Object, Object, Object> implements 
         buildHeap(numbers);
 
         for (int i = n; i > 0; i--) {
-            Log.d("Calling from sort", " exchange");
             exchange(0, i);
             n = n - 1;
-            Log.d("Calling from sort ", " with 0");
             maxheap(0);
 
         }
     }
 
     public interface SortObserver {
-        public void onChange();
+        public void onChange(int i, int j);
     }
 
     public SortObserver mCallback;
@@ -62,6 +60,12 @@ public class HeapAsyncTask extends AsyncTask<Object, Object, Object> implements 
     @Override
     public void onPostExecute(Object result) {
       //  delegate.processFinish(i, j);
+    }
+
+    @Override
+    public void onProgressUpdate(Object... result){
+        super.onProgressUpdate(result);
+        mCallback.onChange(changeI, changeJ);
     }
 
     public void maxheap(int index) {
@@ -94,16 +98,25 @@ public class HeapAsyncTask extends AsyncTask<Object, Object, Object> implements 
     }
 
     public void exchange(final int i, final int j) {
+        changeI = i;
+        changeJ = j;
+        publishProgress();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Log.d("Exchange called with ", String.valueOf(i) + " " + String.valueOf(j));
         int t = numbersToSort.get(i);
-
         numbersToSort.set(i, numbersToSort.get(j));
         numbersToSort.set(j, t);
 
-        mCallback.onChange();
 
-        Log.d("Inside exchange with ", String.valueOf(i) + " " + String.valueOf(j));
+      //  mCallback.onChange();
+        publishProgress();
+
+     //   Log.d("Inside exchange with ", String.valueOf(i) + " " + String.valueOf(j));
 
     }
 

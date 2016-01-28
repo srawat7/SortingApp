@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import shivamrawat.sortingapp.R;
+import shivamrawat.sortingapp.Sorts.HeapSort;
 
 /**
  * Created by Shivam on 1/24/2016.
@@ -20,7 +21,7 @@ public class HeapSortAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<Integer> mList;
 
-    public HeapSortAdapter(Activity activity, ArrayList<Integer> numberList){
+    public HeapSortAdapter(Activity activity, ArrayList<Integer> numberList) {
         this.activity = activity;
         this.mList = numberList;
     }
@@ -42,12 +43,17 @@ public class HeapSortAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.grid_element, null);
         }
         TextView title = (TextView) convertView.findViewById(R.id.number);
         title.setText(String.valueOf(mList.get(position)));
+        if(position == HeapSort.setI || position == HeapSort.setJ)
+            title.setBackgroundResource(R.drawable.redbox);
+        else
+            title.setBackgroundResource(R.drawable.box);
         return convertView;
     }
+
 }
