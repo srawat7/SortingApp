@@ -23,7 +23,7 @@
         <activity
             android:name=".Sorts.BucketSort"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Heap Sort Activity">
+            android:label="Bucket Sort Activity">
         </activity>
 
     </application>

@@ -16,12 +16,12 @@ import shivamrawat.sortingapp.Sorts.BucketSort;
 /**
  * Created by Shivam on 1/24/2016.
  */
-public class SortAdapter extends BaseAdapter {
+public class SortedAdapter extends BaseAdapter {
 
     private Activity activity;
     private ArrayList<Integer> mList;
 
-    public SortAdapter(Activity activity, ArrayList<Integer> numberList) {
+    public SortedAdapter(Activity activity, ArrayList<Integer> numberList) {
         this.activity = activity;
         this.mList = numberList;
     }

@@ -8,7 +8,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 
 import shivamrawat.sortingapp.Adapter.BucketSortAdapter;
-import shivamrawat.sortingapp.Adapter.SortAdapter;
+import shivamrawat.sortingapp.Adapter.SortedAdapter;
 import shivamrawat.sortingapp.R;
 
 /**
@@ -21,7 +21,7 @@ public class BucketSort extends AppCompatActivity implements BucketAsyncTask.Sor
     private GridView gridView;
     private GridView gridView2;
     private BucketSortAdapter adapter;
-    private SortAdapter adapter2;
+    private SortedAdapter adapter2;
 
     public static int setI = -1;
     public static int setJ = -1;
@@ -48,7 +48,7 @@ public class BucketSort extends AppCompatActivity implements BucketAsyncTask.Sor
         gridView.setAdapter(adapter);
 
         gridView2 = (GridView) findViewById(R.id.gridView_sorted);
-        adapter2 = new SortAdapter(BucketSort.this, sorted_sequence);
+        adapter2 = new SortedAdapter(BucketSort.this, sorted_sequence);
         gridView2.setAdapter(adapter2);
 
         task = (BucketAsyncTask) new BucketAsyncTask(numbersToSort, sorted_sequence, new BucketAsyncTask.SortObserver() {
