@@ -52,6 +52,8 @@ public class BucketSortAdapter extends BaseAdapter {
             title.setBackgroundResource(R.drawable.redbox);
         else
             title.setBackgroundResource(R.drawable.box);
+
+
         return convertView;
     }
 }

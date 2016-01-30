@@ -32,6 +32,11 @@ public class HeapAsyncTask extends AsyncTask<Object, Object, Object> implements 
 
         for (int i = n; i > 0; i--) {
             exchange(0, i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             n = n - 1;
             maxheap(0);
 
@@ -87,7 +92,7 @@ public class HeapAsyncTask extends AsyncTask<Object, Object, Object> implements 
 
             exchange(index, largest);
             try {
-                Thread.sleep(2000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -102,7 +107,7 @@ public class HeapAsyncTask extends AsyncTask<Object, Object, Object> implements 
         changeJ = j;
         publishProgress();
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

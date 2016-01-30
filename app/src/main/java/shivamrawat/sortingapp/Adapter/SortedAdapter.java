@@ -45,14 +45,17 @@ public class SortedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.grid_element, null);
+            convertView = inflater.inflate(R.layout.bucket_element, null);
         }
-        TextView title = (TextView) convertView.findViewById(R.id.number);
+        TextView title = (TextView) convertView.findViewById(R.id.number2);
         title.setText(String.valueOf(mList.get(position)));
         if(position == BucketSort.setJ)
             title.setBackgroundResource(R.drawable.redbox);
         else
             title.setBackgroundResource(R.drawable.box);
+
+        TextView title2 = (TextView) convertView.findViewById(R.id.number);
+        title2.setText(String.valueOf(position));
         return convertView;
     }
 }

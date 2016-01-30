@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         bucketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> numbers = generateRandomArray();
+                ArrayList<Integer> numbers = generateRandomArray(25);
                 if(numbers != null) {
 
                     Intent intent = new Intent(MainActivity.this, BucketSort.class);
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         heapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> numbers = generateRandomArray();
+                ArrayList<Integer> numbers = generateRandomArray(100);
                 if(numbers != null) {
                     Intent intent = new Intent(MainActivity.this, HeapSort.class);
                     intent.putIntegerArrayListExtra("numbersArray", numbers);
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<Integer> generateRandomArray(){
+    public ArrayList<Integer> generateRandomArray(int range){
         ArrayList<Integer> list = new ArrayList<Integer>();
         int arrayLength;
 
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             Random r = new Random();
             for(int i = 0; i < arrayLength; i++)
             {
-                int i1 = r.nextInt(100 - 1);
+                int i1 = r.nextInt(range - 1);
                 list.add(i1);
 
             }

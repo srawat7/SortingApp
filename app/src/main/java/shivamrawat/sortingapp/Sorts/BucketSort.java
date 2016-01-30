@@ -39,9 +39,14 @@ public class BucketSort extends AppCompatActivity implements BucketAsyncTask.Sor
         numbersToSort = intent.getIntegerArrayListExtra("numbersArray");
 
         sorted_sequence = new ArrayList<Integer>();
-        for (Integer number : numbersToSort) {
+    /*    for (Integer number : numbersToSort) {
+            sorted_sequence.add(0);
+        } */
+        int max = maxValue(numbersToSort);
+        for (int i = 0; i < max + 1; i++) {
             sorted_sequence.add(0);
         }
+
 
         gridView = (GridView) findViewById((R.id.gridView));
         adapter = new BucketSortAdapter(BucketSort.this, numbersToSort);
@@ -84,5 +89,15 @@ public class BucketSort extends AppCompatActivity implements BucketAsyncTask.Sor
         adapter2.notifyDataSetChanged();
         finish();
         super.onBackPressed();
+    }
+
+    static int maxValue(ArrayList<Integer> sequence)
+    {
+        int maxValue = 0;
+        for(Integer value: sequence){
+            if(value > maxValue)
+                maxValue = value;
+        }
+        return maxValue;
     }
 }

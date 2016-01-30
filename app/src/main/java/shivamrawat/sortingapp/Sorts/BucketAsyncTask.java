@@ -25,18 +25,32 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
     @Override
     public void sort(ArrayList<Integer> sequence) {
 
-        int[] Bucket = new int[maxValue + 1];
+        for (int i = 0; i < sequence.size(); i++) {
+            changeI = i;
+            changeJ = sequence.get(i);
+            publishProgress();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            sorted_sequence.set(sequence.get(i), sorted_sequence.get(sequence.get(i)) + 1);
+            numbersToSort.set(i, 0);
+            publishProgress();
 
-        for (int i = 0; i < sequence.size(); i++)
-            Bucket[sequence.get(i)]++;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         int outPos = 0;
-        for (int i = 0; i < Bucket.length; i++) {
-
-            for (int j = 0; j < Bucket[i]; j++) {
-                int index = numbersToSort.indexOf(i);
-                changeI = index;
-                changeJ = outPos;
+        for (int i = 0; i < sorted_sequence.size(); i++) {
+            int index = sorted_sequence.get(i);
+            for (int j = 0; j < index; j++) {
+                changeI = outPos;
+                changeJ = i;
 
                 publishProgress();
 
@@ -46,10 +60,9 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
                     e.printStackTrace();
                 }
 
-                sorted_sequence.set(outPos++, i);
-           //     int index = numbersToSort.indexOf(i);
-                numbersToSort.set(index, 0);
-             //   mCallback.onChange();
+                numbersToSort.set(outPos++, i);
+                sorted_sequence.set(i, sorted_sequence.get(i) - 1);
+             //   numbersToSort.set(index, 0);
                 publishProgress();
                 try {
                     Thread.sleep(2000);
@@ -98,9 +111,6 @@ public class BucketAsyncTask extends AsyncTask<Object, Object, Object> implement
             if(value > maxValue)
                 maxValue = value;
         }
-    /*    for (int i = 0; i < sequence.length; i++)
-            if (sequence[i] > maxValue)
-                maxValue = sequence[i]; */
         return maxValue;
     }
 }
